@@ -6,6 +6,10 @@ const app = express();
 const expressEjsLayout = require('express-ejs-layouts')
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
+
+require("./config/passport")(passport)
+
 //mongoose
 mongoose.connect('mongodb://localhost/test',{useNewUrlParser: true, useUnifiedTopology : true})
 .then(() => console.log('connected,,'))
@@ -22,6 +26,11 @@ app.use(session({
     resave : true,
     saveUninitialized : true
    }));
+
+   router.get('/dashboard', (req,res)=>{
+   res.render('dashboard');
+   })
+
    //use flash
    app.use(flash());
    app.use((req,res,next)=> {
